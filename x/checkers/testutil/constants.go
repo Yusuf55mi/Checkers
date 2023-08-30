@@ -1,7 +1,7 @@
 package testutil
 
 const (
-	Alice = "cosmos1jmjfq0tplp9tmx4v9uemw72y4d2wa5nr3xn9d3"
-	Bob   = "cosmos1xyxs3skf3f4jfqeuv89yyaqvjc6lffavxqhc8g"
-	Carol = "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5"
+	Alice = "cosmos1hgkagcrh4wunqpe5mj25z95gevzaxleftqxsuv"
+	Bob   = "cosmos140muylela5f5tvxt4q9py6n3dl490rmthkdzgp"
+	Carol = "cosmos1kkr98kpru2aj8jjr7s8w59vrr4prg5n6p9u38m"
 )
