@@ -223,6 +223,20 @@ export default {
 		},
 		
 		
+		async sendMsgPlayMove({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const fullFee = Array.isArray(fee)  ? {amount: fee, gas: "200000"} :fee;
+				const result = await client.CheckersCheckers.tx.sendMsgPlayMove({ value, fee: fullFee, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgPlayMove:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgPlayMove:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgCreateGame({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -238,6 +252,19 @@ export default {
 			}
 		},
 		
+		async MsgPlayMove({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.CheckersCheckers.tx.msgPlayMove({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgPlayMove:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgPlayMove:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgCreateGame({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
