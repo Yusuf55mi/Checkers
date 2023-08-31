@@ -82,6 +82,8 @@ func (msg *MsgPlayMove) ValidateBasic() error {
 			return sdkerrors.Wrapf(ErrInvalidPositionIndex, situation.err, situation.value)
 		}
 	}
-
+	if msg.FromX == msg.ToX && msg.FromY == msg.ToY {
+		return sdkerrors.Wrapf(ErrMoveAbsent, "x (%d) and y (%d)", msg.FromX, msg.FromY)
+	}
 	return nil
 }
