@@ -274,19 +274,11 @@ func TestPlayMoveEmitted(t *testing.T) {
 		ToX:       2,
 		ToY:       3,
 	})
-	msgServer.PlayMove(context, &types.MsgPlayMove{
-		Creator:   carol,
-		GameIndex: "1",
-		FromX:     0,
-		FromY:     5,
-		ToX:       1,
-		ToY:       4,
-	})
 	ctx := sdk.UnwrapSDKContext(context)
 	require.NotNil(t, ctx)
 	events := sdk.StringifyEvents(ctx.EventManager().ABCIEvents())
-	require.Len(t, events, 3)
-	event := events[0]
+	require.Len(t, events, 2)
+	event := events[1]
 	require.EqualValues(t, sdk.StringEvent{
 		Type: "move-played",
 		Attributes: []sdk.Attribute{
