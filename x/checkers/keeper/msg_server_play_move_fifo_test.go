@@ -9,8 +9,11 @@ import (
 )
 
 func TestPlayMove2Games2MovesHasSavedFifo(t *testing.T) {
-	msgServer, keeper, context := setupMsgServerWithOneGameForPlayMove(t)
+	msgServer, keeper, context, ctrl, escrow := setupMsgServerWithOneGameForPlayMove(t)
 	ctx := sdk.UnwrapSDKContext(context)
+	defer ctrl.Finish()
+	pay := escrow.ExpectPay(context, bob, 45).Times(1)
+	escrow.ExpectRefund(context, bob, 45).Times(1).After(pay)
 	msgServer.CreateGame(context, &types.MsgCreateGame{
 		Creator: bob,
 		Black:   carol,
