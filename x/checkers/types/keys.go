@@ -41,7 +41,6 @@ const (
 	MovePlayedEventCapturedY = "captured-y"
 	MovePlayedEventWinner    = "winner"
 	MovePlayedEventBoard     = "board"
-	GameCreatedEventWager    = "wager"
 )
 
 const (
