@@ -48,6 +48,7 @@ func TestPlayMove2Games2MovesHasSavedFifo(t *testing.T) {
 		Turn:        "r",
 		Black:       bob,
 		Red:         carol,
+		Wager:       45,
 		Winner:      "*",
 		Deadline:    types.FormatDeadline(ctx.BlockTime().Add(types.MaxTurnDuration)),
 		MoveCount:   uint64(1),

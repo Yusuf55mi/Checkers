@@ -18,11 +18,13 @@ const (
 
 func GetStoredGame1() types.StoredGame {
 	return types.StoredGame{
-		Black: alice,
-		Red:   bob,
-		Index: "1",
-		Board: rules.New().String(),
-		Turn:  "b",
+		Black:    alice,
+		Red:      bob,
+		Wager:    45,
+		Deadline: "2006-01-02 15:04:05.999999999 +0000 UTC",
+		Index:    "1",
+		Board:    rules.New().String(),
+		Turn:     "b",
 	}
 }
 

@@ -18,18 +18,25 @@ func TestPlayMoveUpToWinner(t *testing.T) {
 	systemInfo, found := keeper.GetSystemInfo(ctx)
 	require.True(t, found)
 	require.EqualValues(t, types.SystemInfo{
-		NextId: 2,
+		NextId:        2,
+		FifoHeadIndex: "-1",
+		FifoTailIndex: "-1",
 	}, systemInfo)
 
 	game, found := keeper.GetStoredGame(ctx, "1")
 	require.True(t, found)
 	require.EqualValues(t, types.StoredGame{
-		Index:  "1",
-		Board:  "",
-		Turn:   "b",
-		Black:  bob,
-		Red:    carol,
-		Winner: "b",
+		Index:       "1",
+		Board:       "",
+		AfterIndex:  "-1",
+		BeforeIndex: "-1",
+		Turn:        "b",
+		Black:       bob,
+		Red:         carol,
+		MoveCount:   40,
+		Winner:      "b",
+		Deadline:    types.FormatDeadline(ctx.BlockTime().Add(types.MaxTurnDuration)),
+		Wager:       45,
 	}, game)
 	events := sdk.StringifyEvents(ctx.EventManager().ABCIEvents())
 	require.Len(t, events, 41)
