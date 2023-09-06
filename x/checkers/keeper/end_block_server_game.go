@@ -26,11 +26,17 @@ func (k Keeper) ForfeitExpiredGames(goCtx context.Context) {
 	gameIndex := systemInfo.FifoHeadIndex
 	var storedGame types.StoredGame
 
+	//return if gameIndex is -1
+	if gameIndex == types.NoFifoIndex {
+		return
+	}
+
 	for {
 
 		storedGame, found = k.GetStoredGame(ctx, gameIndex)
 		if !found {
-			panic("Fifo head game not found " + systemInfo.FifoHeadIndex)
+			//panic("Fifo head game not found " + systemInfo.FifoHeadIndex)
+			return
 		}
 		deadline, err := storedGame.GetDeadlineAsTime()
 		if err != nil {
