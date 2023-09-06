@@ -10,8 +10,9 @@ import (
 )
 
 func TestForfeitUnplayed(t *testing.T) {
-	_, keeper, context := setupMsgServerWithOneGameForPlayMove(t)
+	_, keeper, context, ctrl, _ := setupMsgServerWithOneGameForPlayMove(t)
 	ctx := sdk.UnwrapSDKContext(context)
+	defer ctrl.Finish()
 	game1, found := keeper.GetStoredGame(ctx, "1")
 	require.True(t, found)
 	game1.Deadline = types.FormatDeadline(ctx.BlockTime().Add(time.Duration(-1)))
@@ -42,8 +43,11 @@ func TestForfeitUnplayed(t *testing.T) {
 }
 
 func TestForfeitPlayedOnce(t *testing.T) {
-	msgServer, keeper, context := setupMsgServerWithOneGameForPlayMove(t)
+	msgServer, keeper, context, ctrl, escrow := setupMsgServerWithOneGameForPlayMove(t)
 	ctx := sdk.UnwrapSDKContext(context)
+	defer ctrl.Finish()
+	pay := escrow.ExpectPay(context, bob, 45).Times(1)
+	escrow.ExpectRefund(context, bob, 45).Times(1).After(pay)
 	msgServer.PlayMove(context, &types.MsgPlayMove{
 		Creator:   bob,
 		GameIndex: "1",
